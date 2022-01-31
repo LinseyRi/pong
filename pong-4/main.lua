@@ -68,6 +68,7 @@ function love.load()
     ballY = VIRTUAL_HEIGHT / 2 - 2
 
     -- math.random returns a random value between the left and right number
+    -- stores current velocity 
     ballDX = math.random(2) == 1 and 100 or -100
     ballDY = math.random(-50, 50)
 
@@ -80,6 +81,7 @@ end
 --[[
     Runs every frame, with "dt" passed in, our delta in seconds 
     since the last frame, which LÖVE2D supplies us.
+    runs EVERY frame
 ]]
 function love.update(dt)
     -- player 1 movement
@@ -87,7 +89,7 @@ function love.update(dt)
         -- add negative paddle speed to current Y scaled by deltaTime
         -- now, we clamp our position between the bounds of the screen
         -- math.max returns the greater of two values; 0 and player Y
-        -- will ensure we don't go above it
+        -- will ensure we don't go above 0
         player1Y = math.max(0, player1Y + -PADDLE_SPEED * dt)
     elseif love.keyboard.isDown('s') then
         -- add positive paddle speed to current Y scaled by deltaTime
@@ -138,6 +140,7 @@ function love.keypressed(key)
             -- the and/or pattern here is Lua's way of accomplishing a ternary operation
             -- in other programming languages like C
             ballDX = math.random(2) == 1 and 100 or -100
+            -- if math.random(2) is equal to 1, then ballDX is equal to 100, else it is equal to -100
             ballDY = math.random(-50, 50) * 1.5
         end
     end

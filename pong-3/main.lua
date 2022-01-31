@@ -76,7 +76,7 @@ function love.update(dt)
     -- player 1 movement
     if love.keyboard.isDown('w') then
         -- add negative paddle speed to current Y scaled by deltaTime
-        player1Y = player1Y + -PADDLE_SPEED * dt
+        player1Y = player1Y + -PADDLE_SPEED * dt -- negative paddle speed because we're moving UP, * by delta time 
     elseif love.keyboard.isDown('s') then
         -- add positive paddle speed to current Y scaled by deltaTime
         player1Y = player1Y + PADDLE_SPEED * dt
