@@ -25,11 +25,12 @@
 -- a more retro aesthetic
 --
 -- https://github.com/Ulydev/push
-push = require 'push'
+push = require 'push' -- call a library into the application 
 
 WINDOW_WIDTH = 1280
 WINDOW_HEIGHT = 720
 
+-- create a virtual window to give a more low res feel, think of it with these pixels, but still render it in larger size 
 VIRTUAL_WIDTH = 432
 VIRTUAL_HEIGHT = 243
 
@@ -44,6 +45,7 @@ function love.load()
     -- initialize our virtual resolution, which will be rendered within our
     -- actual window no matter its dimensions; replaces our love.window.setMode call
     -- from the last example
+    -- used instead of set load 
     push:setupScreen(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT, {
         fullscreen = false,
         resizable = false,
