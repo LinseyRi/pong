@@ -105,6 +105,7 @@ end
     since the last frame, which LÖVE2D supplies us.
 ]]
 function love.update(dt)
+    -- this whole function until line 117 initialises the ball velocity and then changes it according to serve 
     if gameState == 'serve' then
         -- before switching to play, initialize ball's velocity based
         -- on player who last scored
