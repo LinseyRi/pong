@@ -49,6 +49,7 @@ VIRTUAL_WIDTH = 432
 VIRTUAL_HEIGHT = 243
 
 -- speed at which we will move our paddle; multiplied by dt in update
+-- the multipliction level of dt will work in floats (.e.g 0.1th of a second)
 PADDLE_SPEED = 200
 
 --[[
@@ -130,11 +131,15 @@ function love.update(dt)
     elseif gameState == 'play' then
         -- detect ball collision with paddles, reversing dx if true and
         -- slightly increasing it, then altering the dy based on the position of collision
+        -- class method returns true or false by testing comparitive locations of x and y axis 
         if ball:collides(player1) then
+            -- velocity on x axis is increased in speed, and sent in the OPPOSITE direction of what it was previously through using the negative ball velocity (it just reverses it) 
             ball.dx = -ball.dx * 1.03
+            -- move the ball by 5px to ensure it is no longer colliding with the paddle, avoiding a constant collision loop 
+            -- by adding 5, we move the ball the WIDTH OF THE PADDLE to the right 
             ball.x = player1.x + 5
 
-            -- keep velocity going in the same direction, but randomize it
+            -- keep velocity going in the same direction, but randomize it's velocity on the Y axis 
             if ball.dy < 0 then
                 ball.dy = -math.random(10, 150)
             else
@@ -145,6 +150,7 @@ function love.update(dt)
         end
         if ball:collides(player2) then
             ball.dx = -ball.dx * 1.03
+            -- by subtracting 4, we move the ball THE WIDTH OF THE BALL to the left, meaning it no longer overlaps 
             ball.x = player2.x - 4
 
             -- keep velocity going in the same direction, but randomize it
@@ -160,6 +166,7 @@ function love.update(dt)
         -- detect upper and lower screen boundary collision and reverse if collided
         if ball.y <= 0 then
             ball.y = 0
+            -- changing the dy ball velocity by making negative will keep same x axis tragectory but change y axis direction 
             ball.dy = -ball.dy
             sounds['wall_hit']:play()
         end
@@ -207,6 +214,8 @@ function love.update(dt)
 
     -- player 1 movement
     if love.keyboard.isDown('w') then
+        -- can only move on y axis so only change dy
+        -- change will take effect when we call player1:update(dt) at the end of the game loop 
         player1.dy = -PADDLE_SPEED
     elseif love.keyboard.isDown('s') then
         player1.dy = PADDLE_SPEED
@@ -274,7 +283,7 @@ end
     updated or otherwise.
 ]]
 function love.draw()
-
+    -- push:apply(operation) i.e. start or end should wrap your main drawing logic 
     push:apply('start')
 
     -- clear the screen with a specific color; in this case, a color similar

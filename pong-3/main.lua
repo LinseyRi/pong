@@ -76,6 +76,7 @@ function love.update(dt)
     -- player 1 movement
     if love.keyboard.isDown('w') then
         -- add negative paddle speed to current Y scaled by deltaTime
+        -- If player pressed W key (wanting paddle to go up), take the current position of player 1's paddle (starts at 30) then ADD to it negative paddle-speed - negative because we want the paddle to go up - times by delta time. delta time is passed in to the love.update() function - it is the time since the last update in seconds. Timsing by delta time means we're not jumping the FULL size of teh rectangle each time. 
         player1Y = player1Y + -PADDLE_SPEED * dt -- negative paddle speed because we're moving UP, * by delta time 
     elseif love.keyboard.isDown('s') then
         -- add positive paddle speed to current Y scaled by deltaTime

@@ -14,6 +14,8 @@
 
 Ball = Class{}
 
+
+-- initialises the instance of a ball, giving it x & y axis - thus enabling it to be drawn - and the width and height. Note the width and height, as if you ever want to center anything you would need to divide both of these by 2 and subtract those values when positioning. X and Y corners would always be on top left corner as this is where the LUA 2d coordinates system starts. 
 function Ball:init(x, y, width, height)
     self.x = x
     self.y = y
@@ -22,7 +24,9 @@ function Ball:init(x, y, width, height)
 
     -- these variables are for keeping track of our velocity on both the
     -- X and Y axis, since the ball can move in two dimensions
+    -- to set ball's dy, take a random number between 1 or 2. If it is 1, velocity is set to -100 and so the ball will go UP, else it is positive 100 and ball would go down.
     self.dy = math.random(2) == 1 and -100 or 100
+    -- to set ball's xy, pick random no. between 1 or 2. If that equals 1 ? then dx is random number between -80 and -100 - i.e. will go LEFT, else pick between positive 80 and 100, and so would go RIGHT 
     self.dx = math.random(2) == 1 and math.random(-80, -100) or math.random(80, 100)
 end
 
@@ -62,6 +66,7 @@ end
     Simply applies velocity to position, scaled by deltaTime.
 ]]
 function Ball:update(dt)
+    -- ball's current position added to (it's current velocity i.e. direction * delta time e.g. 0.1)
     self.x = self.x + self.dx * dt
     self.y = self.y + self.dy * dt
 end

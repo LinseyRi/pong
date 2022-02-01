@@ -31,6 +31,7 @@ function Paddle:init(x, y, width, height)
     self.y = y
     self.width = width
     self.height = height
+    -- only need to set self.dy as paddle cannot move along the x axis 
     self.dy = 0
 end
 
@@ -39,6 +40,9 @@ function Paddle:update(dt)
     -- current calculated Y position when pressing up so that we don't
     -- go into the negatives; the movement calculation is simply our
     -- previously-defined paddle speed scaled by dt
+
+    -- if the speed paddle is moving at is less than 0 then the paddle is going UP 
+    -- it's position is then either 0 (which is the very top of the screen) or it's current position plus it's current velocity times by delta time) - whichever is HIGHEST (because we're working in negative figures)
     if self.dy < 0 then
         self.y = math.max(0, self.y + self.dy * dt)
     -- similar to before, this time we use math.min to ensure we don't
@@ -46,6 +50,7 @@ function Paddle:update(dt)
     -- height (or else it will go partially below, since position is
     -- based on its top left corner)
     else
+        -- if the y axis velocity (i.e. direction moving at) is bigger than 0 then paddle is moving DOWN, therefore it's current position is either viewheight minus height of the paddle (so it doesn't disappear off screen) or it's current position + current velocity * delta time - whichever is LOWEST since we are working in positive figures and moving DOWN 
         self.y = math.min(VIRTUAL_HEIGHT - self.height, self.y + self.dy * dt)
     end
 end
