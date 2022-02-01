@@ -223,14 +223,19 @@ function love.update(dt)
         player1.dy = 0
     end
 
+    -- player 2 movement AI could be improved my implementing actual trajectory guessing, or a control loop PID 
     -- player 2 movement
-    if love.keyboard.isDown('up') then
-        player2.dy = -PADDLE_SPEED
-    elseif love.keyboard.isDown('down') then
-        player2.dy = PADDLE_SPEED
+    -- if ball.x < VIRTUAL_WIDTH / 2 then 
+    --     player2.dy = math.random(2) == 1 and -PADDLE_SPEED or PADDLE_SPEED
+    -- else 
+    if player2.y + 10 < ball.y then
+        player2.dy = PADDLE_SPEED / 2
+    elseif player2.y + player2.height - 10 > ball.y + ball.height then
+        player2.dy = -PADDLE_SPEED / 2
     else
         player2.dy = 0
     end
+    -- end
 
     -- update our ball based on its DX and DY only if we're in play state;
     -- scale the velocity by dt so movement is framerate-independent
